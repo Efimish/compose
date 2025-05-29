@@ -1,0 +1,8 @@
+FROM alpine
+
+RUN apk add curl iptables ipset
+
+RUN tar -xzf <(wget -qO- https://github.com/bol-van/zapret/releases/download/v71/zapret-v70.6.tar.gz) -C /tmp && \
+  mv /tmp/zapret-v71 /opt/zapret && \
+  /opt/zapret/install_bin.sh && \
+  /opt/zapret/install_prereq.sh
