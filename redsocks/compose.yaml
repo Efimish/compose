@@ -1,0 +1,12 @@
+services:
+  redsocks:
+    build:
+      context: .
+      dockerfile: Containerfile
+    container_name: redsocks
+    restart: unless-stopped
+    volumes:
+      - ./redsocks.conf:/etc/redsocks/redsocks.conf
+    ports:
+      # Transparent proxy
+      - "12345:12345/tcp"

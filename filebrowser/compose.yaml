@@ -1,0 +1,20 @@
+services:
+  filebrowser:
+    image: docker.io/filebrowser/filebrowser
+    container_name: filebrowser
+    restart: unless-stopped
+    volumes:
+      - ./data/filebrowser/:/srv/
+    ports:
+      # Web interface
+      - "8080:80/tcp"
+    environment:
+      - USER=${USER}
+      - PASSWORD=${PASSWORD}
+    entrypoint: sh -c "
+      if [ ! -f /database.db ]; then
+        /filebrowser config init;
+        /filebrowser users add $USER $PASSWORD --perm.admin;
+      fi;
+      /filebrowser
+      "

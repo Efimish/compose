@@ -1,0 +1,9 @@
+SocksPort 0.0.0.0:9050
+
+UseBridges 1
+
+ClientTransportPlugin obfs4 exec /usr/bin/lyrebird
+
+Bridge obfs4 ipv4:port SOMETHING cert=SOMETHING iat-mode=0
+Bridge obfs4 ipv4:port SOMETHING cert=SOMETHING iat-mode=1
+Bridge obfs4 ipv4:port SOMETHING cert=SOMETHING iat-mode=2

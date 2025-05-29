@@ -1,0 +1,19 @@
+services:
+  adguardhome:
+    image: docker.io/adguard/adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    volumes:
+      - ./data/adguard-config/:/opt/adguardhome/conf/
+      - ./data/adguard-data/:/opt/adguardhome/work/
+    ports:
+      # Plain DNS
+      - "53:53/tcp"
+      - "53:53/udp"
+      # Admin panel
+      - "80:80/tcp"
+      - "443:443/tcp"
+      - "443:443/udp"
+      - "3000:3000/tcp"
+      # DNS-over-TLS
+      - "853:853/tcp"
