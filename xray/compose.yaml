@@ -6,5 +6,5 @@ services:
     volumes:
       - ./config.json:/etc/xray/config.json
     ports:
-      - "80:80/udp"
+      - "80:80/tcp"
       - "443:443/tcp"
