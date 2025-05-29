@@ -1,0 +1,10 @@
+services:
+  xray:
+    image: ghcr.io/xtls/xray-core
+    container_name: xray
+    restart: unless-stopped
+    volumes:
+      - ./config.json:/etc/xray/config.json
+    ports:
+      - "80:80/udp"
+      - "443:443/tcp"
