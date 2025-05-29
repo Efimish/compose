@@ -1,0 +1,7 @@
+services:
+  xray:
+    image: docker.io/plantuml/plantuml-server
+    container_name: plantuml
+    restart: unless-stopped
+    ports:
+      - "8080:8080/tcp"
