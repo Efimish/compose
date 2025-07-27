@@ -1,0 +1,38 @@
+services:
+  mariadb:
+    image: docker.io/mariadb
+    container_name: hiddify_mariadb
+    restart: unless-stopped
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=1
+      - MYSQL_DATABASE=hiddifypanel
+      - MYSQL_USER=hiddifypanel
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+  redis:
+    image: docker.io/redis
+    container_name: hiddify_redis
+    restart: unless-stopped
+    volumes:
+      - ./data/redis:/data
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: sh -c "redis-server --requirepass \"$REDIS_PASSWORD\""
+
+  hiddify:
+    image: ghcr.io/hiddify/hiddify-manager
+    container_name: hiddify
+    restart: unless-stopped
+    volumes:
+      - ./data/:/hiddify-data/
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    depends_on:
+      - mariadb
+      - redis
