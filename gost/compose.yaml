@@ -1,0 +1,12 @@
+services:
+  gost:
+    image: docker.io/gogost/gost
+    container_name: gost
+    restart: unless-stopped
+    ports:
+      - "1080:1080/tcp"
+      - "1080:1080/udp"
+    environment:
+      - USERNAME=${USERNAME}
+      - PASSWORD=${PASSWORD}
+    command: ["-L", "${USERNAME}:${PASSWORD}@:1080"]
