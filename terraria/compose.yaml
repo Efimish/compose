@@ -6,6 +6,7 @@ services:
     volumes:
       - ./data:/opt/terraria/config
     environment:
+      - "PASSWORD=${PASSWORD}"
       - "WORLDNAME=world"
     ports:
       - "7777:7777/tcp"
