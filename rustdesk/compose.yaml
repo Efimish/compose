@@ -1,20 +1,20 @@
 services:
   hbbs:
-    container_name: hbbs
     image: ghcr.io/rustdesk/rustdesk-server:latest
-    command: hbbs
+    container_name: hbbs
+    restart: unless-stopped
     volumes:
       - ./data:/root
     network_mode: "host"
+    command: hbbs
     depends_on:
       - hbbr
-    restart: unless-stopped
 
   hbbr:
-    container_name: hbbr
     image: ghcr.io/rustdesk/rustdesk-server:latest
-    command: hbbr
+    container_name: hbbr
+    restart: unless-stopped
     volumes:
       - ./data:/root
     network_mode: "host"
-    restart: unless-stopped
+    command: hbbr
