@@ -1,0 +1,11 @@
+services:
+  terraria:
+    image: docker.io/passivelemon/terraria-docker
+    container_name: terraria
+    restart: unless-stopped
+    volumes:
+      - ./data:/opt/terraria/config
+    environment:
+      - "WORLDNAME=world"
+    ports:
+      - "7777:7777/tcp"
