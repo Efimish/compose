@@ -7,4 +7,6 @@ services:
       - ./config.json:/etc/xray/config.json
     ports:
       - "443:443/tcp"
+    cap_add:
+      - NET_BIND_SERVICE
     command: ["run", "-c", "/etc/xray/config.json"]
