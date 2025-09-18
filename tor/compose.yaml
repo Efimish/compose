@@ -1,8 +1,6 @@
 services:
   tor:
-    build:
-      context: .
-      dockerfile: Containerfile
+    image: ghcr.io/efimish/tor
     container_name: tor
     restart: unless-stopped
     volumes:
