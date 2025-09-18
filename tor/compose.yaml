@@ -8,5 +8,4 @@ services:
     volumes:
       - ./torrc:/etc/tor/torrc
     ports:
-      # SOCKS5 proxy
       - "9050:9050/tcp"

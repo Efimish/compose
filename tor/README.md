@@ -1,4 +1,4 @@
 # Tor proxy
 
-1. Edit `torrc` file
+1. Add bridges to `torrc` file
 2. `podman compose up -d`

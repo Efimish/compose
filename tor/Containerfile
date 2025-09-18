@@ -1,12 +1,13 @@
 FROM alpine:edge
 
-RUN apk -U upgrade && \
-    apk -v add tor lyrebird curl && \
+RUN echo 'https://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
+    apk upgrade && \
+    apk add tor lyrebird webtunnel curl && \
     chmod 700 /var/lib/tor && \
     rm -rf /var/cache/apk/*
 
 HEALTHCHECK --timeout=10s --start-period=60s \
-  CMD curl -fIL --socks5-hostname localhost:9050 'https://www.facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion/' || exit 1
+  CMD curl -fIL --socks5-hostname localhost:9050 'http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion/robots.txt' || exit 1
 
 USER tor
 EXPOSE 9050/tcp
