@@ -1,0 +1,14 @@
+services:
+  nginx:
+    image: docker.io/nginx
+    container_name: nginx
+    restart: unless-stopped
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./public:/var/www/public:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+    cap_add:
+      - NET_BIND_SERVICE
