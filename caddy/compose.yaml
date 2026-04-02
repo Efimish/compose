@@ -4,9 +4,13 @@ services:
     container_name: caddy
     restart: unless-stopped
     volumes:
-      - ./.caddy:/data/caddy
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./public:/app
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./public:/var/www/public:ro
+      - caddy-data:/data
+      - caddy-config:/config
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
+volumes:
+  caddy-data:
+  caddy-config:

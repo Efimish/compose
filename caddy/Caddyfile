@@ -1,11 +1,56 @@
 example.com {
-	handle_path /api/* {
-		reverse_proxy 127.0.0.1:3000
+  # Custom TLS certs (instead of automatic).
+  # tls /etc/letsencrypt/live/example.com/fullchain.pem /etc/letsencrypt/live/example.com/privkey.pem
+
+  header {
+    # Prevent MIME sniffing.
+		X-Content-Type-Options "nosniff"
+    # Prevent clickjacking.
+		X-Frame-Options "DENY"
+    # Reduce referrer leakage.
+		Referrer-Policy "strict-origin-when-cross-origin"
+    # Disable dangerous browser features unless needed.
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
 	}
 
-	handle {
-		file_server {
-			root /app/
-		}
+  # Enable Zstandard and Gzip compression.
+  encode
+
+  # Root directory for serving files
+  root /var/www/public
+  handle_errors 404 {
+    rewrite /404.html
+    file_server
+  }
+
+  # Block sensitive project files explicitly.
+  @hidden {
+		not path /.well-known/*
+		path /.* *.env *.log *.ini *.conf *.sql *.bak *.swp *.dist
 	}
+  respond @hidden 404
+
+  # Serve files if they exist, otherwise return 404.
+  try_files {path} {path}/ =404
+  file_server
+
+  # Serve files in SPA mode (React / Vue / Svelte).
+  # try_files {path} {path}/ /index.html
+  # file_server
+
+  # Reverse proxy mode.
+  # reverse_proxy localhost:3000
+
+  # Serve files and an app simultaneously.
+  # handle /api/* {
+	# 	reverse_proxy localhost:3000
+	# }
+	# file_server
+
+  # Serve files first, then proxy missing requests to an app.
+  # try_files {path} {path}/ @backend
+  # handle @backend {
+	#   reverse_proxy localhost:3000
+	# }
+  # file_server
 }
